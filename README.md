@@ -1,15 +1,18 @@
-# Elite Gaming Store - Estructura HTML y hoja de estilos CSS
+# Elite Gaming Store - Estructura HTML, CSS y layout responsivo
 
 ## Descripción
 
 Maqueta del sitio de la tienda de videojuegos **Elite Gaming Store**. La página principal muestra una selección de dos juegos destacados, y desde el menú de navegación se accede al catálogo completo con los cinco juegos disponibles. Ambas páginas comparten la misma estructura: cabecera con el nombre y lema de la tienda, menú de navegación, sección de productos y pie de página con los enlaces a redes sociales y la dirección de la tienda.
 
-Sobre esa estructura se aplica una hoja de estilos externa con un tema oscuro de tipo gaming: fondo azul muy oscuro, tarjetas de producto con borde y sombra, y dos colores de acento (cian y violeta) que se alternan entre los productos y resaltan los enlaces del menú.
+Sobre esa estructura se aplica una hoja de estilos externa con un tema oscuro de tipo gaming: fondo azul muy oscuro, tarjetas de producto con borde y sombra, y dos colores de acento (cian y violeta) que se alternan entre los productos y resaltan los enlaces del menú. El layout se adapta a escritorio, tableta y móvil con Flexbox en el menú y el pie, y CSS Grid en el catálogo.
 
 ## Tecnologías
 
-- **HTML5** con etiquetas semánticas (`<header>`, `<nav>`, `<section>`, `<footer>`).
-- **CSS3** en una hoja externa, con variables personalizadas en `:root`, modelo de cajas (`box-sizing: border-box`), Flexbox para el menú y la grilla de productos, y una media query para pantallas pequeñas.
+- **HTML5** con etiquetas semánticas (`<header>`, `<nav>`, `<section>`, `<footer>`) y `meta viewport` para el render correcto en dispositivos móviles.
+- **CSS3** en una hoja externa, con variables personalizadas en `:root` y modelo de cajas (`box-sizing: border-box`).
+- **Flexbox** exclusivo en `.menu-principal ul` y `.redes-sociales` (footer) para alinear enlaces en fila.
+- **CSS Grid** en `.lista-productos` para la cuadrícula de tarjetas (3, 2 o 1 columna según el ancho).
+- **Media queries** en `max-width: 768px` (tableta) y `max-width: 480px` (móvil); el escritorio usa los estilos base.
 - Navegación mediante enlaces entre páginas y anclajes internos (`id`) hacia las secciones de inicio, productos y contacto.
 - Atributos `alt` en todas las imágenes para cumplir con los estándares de accesibilidad web.
 
@@ -39,9 +42,10 @@ Las imágenes de los productos se encuentran en la carpeta `images/` y se refere
 | `productos.html` | Catálogo completo con los cinco juegos de la tienda. |
 | `Alonso_PFY2201_CSS_Semana2.css` | Hoja de estilos compartida por ambas páginas. |
 
-Las dos páginas enlazan la misma hoja desde su `<head>`:
+Las dos páginas enlazan la misma hoja desde su `<head>` y declaran el viewport:
 
 ```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="Alonso_PFY2201_CSS_Semana2.css">
 ```
 
@@ -93,12 +97,16 @@ Se suman `--fuente-base` (pila sans-serif encabezada por Segoe UI), `--espacio` 
 | Tipo | Selectores | Efecto |
 | --- | --- | --- |
 | ID | `#inicio`, `#productos`, `#contacto` | Degradado en la cabecera, espaciado del catálogo y borde superior del pie |
-| Clase | `.menu-principal`, `.lista-productos`, `.producto`, `.enlace-catalogo`, `.redes-sociales` | Menú horizontal, grilla de productos, tarjetas, botón de catálogo y fila de redes |
+| Clase | `.menu-principal`, `.lista-productos`, `.producto`, `.enlace-catalogo`, `.redes-sociales` | Flexbox en el menú, Grid en el catálogo, tarjetas, botón de catálogo y Flexbox en redes |
 | Pseudo-clase | `:nth-child(odd)`, `:nth-child(even)`, `:nth-child(3n)`, `:hover`, `:focus` | Bordes alternados cian y violeta, realce cada tercer producto y estados interactivos |
 
 ### Comportamiento responsive
 
-Las tarjetas usan `flex: 1 1 300px`, por lo que se reacomodan solas según el ancho disponible. Una media query en `max-width: 600px` reduce los paddings y el tamaño del título principal.
+| Ancho | Dispositivo | Layout |
+| --- | --- | --- |
+| Mayor a 768px | Escritorio (estilos base) | Grid de 3 columnas; menú y RRSS en fila (Flexbox) |
+| `max-width: 768px` | Tableta | Grid de 2 columnas; paddings intermedios; `h1` a 2.1rem |
+| `max-width: 480px` | Móvil | Grid de 1 columna; menú en columna (`flex-direction: column`); `h1` a 1.6rem |
 
 ```mermaid
 flowchart TD
@@ -109,12 +117,17 @@ flowchart TD
     Ids --> Inicio["#inicio: cabecera con degradado"]
     Ids --> Productos["#productos: contenedor del catalogo"]
     Ids --> Contacto["#contacto: pie de pagina"]
-    Clases --> Menu[".menu-principal: nav horizontal"]
-    Clases --> Lista[".lista-productos: grilla flexible"]
+    Clases --> Menu[".menu-principal ul: Flexbox horizontal"]
+    Clases --> Lista[".lista-productos: CSS Grid"]
+    Clases --> Redes[".redes-sociales: Flexbox horizontal"]
     Lista --> Tarjeta[".producto: tarjeta con borde y sombra"]
     Tarjeta --> Impar["nth-child(odd): borde cian"]
     Tarjeta --> Par["nth-child(even): borde violeta"]
     Tarjeta --> Triple["nth-child(3n): degradado de realce"]
+    Lista --> Desk["Escritorio: 3 columnas"]
+    Lista --> Tablet["768px: 2 columnas"]
+    Lista --> Movil["480px: 1 columna"]
+    Menu --> MenuMovil["480px: flex-direction column"]
 ```
 
 ## Clases agregadas al HTML
@@ -158,3 +171,4 @@ Curso **Desarrollo Frontend I (PFY2201)**:
 
 - **Semana 1:** estructura y semántica HTML de ambas páginas.
 - **Semana 2:** hoja de estilos `Alonso_PFY2201_CSS_Semana2.css` con variables, modelo de cajas y selectores avanzados.
+- **Semana 3:** layout responsivo con Flexbox en nav y footer, CSS Grid en el catálogo y media queries a 768px y 480px.
