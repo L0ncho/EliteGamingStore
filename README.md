@@ -24,15 +24,19 @@ EliteGamingStore/
 ├── productos.html
 ├── Alonso_PFY2201_CSS_Semana2.css
 ├── README.md
-└── images/
-    ├── juego1.jpg
-    ├── juego2.jpg
-    ├── juego3.jpg
-    ├── juego4.jpg
-    └── juego5.jpg
+├── images/
+│   ├── juego1.jpg
+│   ├── juego2.jpg
+│   ├── juego3.jpg
+│   ├── juego4.jpg
+│   └── juego5.jpg
+└── entregables/
+    ├── Alonso_Basualdo_Semana1_PFY2201.docx
+    ├── Alonso_Basualdo_Semana2_PFY2201.docx
+    └── Alonso_Basualdo_Semana3_PFY2201.docx
 ```
 
-Las imágenes de los productos se encuentran en la carpeta `images/` y se referencian con rutas relativas (por ejemplo, `images/juego1.jpg`). La hoja de estilos vive en la raíz del proyecto porque el nombre del archivo es parte de la entrega del curso.
+Las imágenes de los productos están en `images/` y se referencian con rutas relativas (por ejemplo, `images/juego1.jpg`). La hoja de estilos vive en la raíz porque el nombre del archivo forma parte de la entrega del curso. La carpeta `entregables/` guarda los informes Word de cada semana.
 
 ## Páginas
 
@@ -40,7 +44,8 @@ Las imágenes de los productos se encuentran en la carpeta `images/` y se refere
 | --- | --- |
 | `index.html` | Página principal con dos juegos destacados y enlace al catálogo completo. |
 | `productos.html` | Catálogo completo con los cinco juegos de la tienda. |
-| `Alonso_PFY2201_CSS_Semana2.css` | Hoja de estilos compartida por ambas páginas. |
+| `Alonso_PFY2201_CSS_Semana2.css` | Hoja de estilos compartida (Semana 2 en adelante: paleta, Grid, Flexbox y media queries). |
+| `entregables/` | Informes Word de las Semanas 1, 2 y 3. |
 
 Las dos páginas enlazan la misma hoja desde su `<head>` y declaran el viewport:
 
@@ -52,20 +57,33 @@ Las dos páginas enlazan la misma hoja desde su `<head>` y declaran el viewport:
 ## Flujo de la página
 
 ```mermaid
-flowchart LR
-    Visitante["Visitante"] --> Portada["index.html"]
-    Portada --> Cabecera["Header: nombre y lema de la tienda"]
-    Portada --> MenuNav["Nav: menu principal"]
-    Portada --> Destacados["Section: 2 juegos destacados"]
-    Portada --> Pie["Footer: redes sociales y direccion"]
-    MenuNav --> AncInicio["#inicio: vuelve a la cabecera"]
-    MenuNav --> AncContacto["#contacto: baja al footer"]
-    MenuNav --> Catalogo["productos.html"]
-    Destacados --> Catalogo
-    Catalogo --> Fichas["5 fichas: titulo, imagen y descripcion"]
-    Catalogo --> Volver["Enlace de regreso a index.html"]
-    Volver --> Portada
-    Pie --> Externos["Sitios externos: Facebook, Twitter, Instagram"]
+flowchart TD
+    Visitante["Visitante"] --> Portada
+
+    subgraph paginaInicio [index.html]
+        Portada["Carga index.html"] --> CabeceraInicio["header#inicio: nombre y lema"]
+        Portada --> NavInicio["nav.menu-principal"]
+        Portada --> Destacados["section#productos: 2 juegos destacados"]
+        Portada --> PieInicio["footer#contacto: RRSS y direccion"]
+        NavInicio --> AncInicio["Ancla #inicio"]
+        NavInicio --> AncContacto["Ancla #contacto"]
+        Destacados --> BotonCatalogo["enlace-catalogo: Ver todos los juegos"]
+    end
+
+    subgraph paginaCatalogo [productos.html]
+        Catalogo["Carga productos.html"] --> CabeceraCatalogo["header#inicio: nombre y lema"]
+        Catalogo --> NavCatalogo["nav.menu-principal"]
+        Catalogo --> Fichas["section#productos: 5 fichas"]
+        Catalogo --> PieCatalogo["footer#contacto: RRSS y direccion"]
+        Fichas --> BotonVolver["enlace-catalogo: Volver a la pagina principal"]
+    end
+
+    NavInicio --> Catalogo
+    BotonCatalogo --> Catalogo
+    NavCatalogo --> Portada
+    BotonVolver --> Portada
+    PieInicio --> Externos["Facebook, Twitter, Instagram"]
+    PieCatalogo --> Externos
 ```
 
 ## Hoja de estilos
@@ -131,19 +149,21 @@ flowchart TD
     Menu --> MenuMovil["480px: flex-direction column"]
 ```
 
-## Clases agregadas al HTML
+## Cambios en el HTML
 
-El HTML de la Semana 1 no cambió en su contenido: no se modificó ningún texto ni ninguna etiqueta semántica. Las únicas incorporaciones fueron el `<link>` a la hoja de estilos y los siguientes atributos `class`:
+El contenido visible de la Semana 1 no se reescribió: no se modificó ningún texto ni ninguna etiqueta semántica. Sobre esa base se añadieron:
 
-| Clase | Elemento |
+| Incorporación | Dónde |
 | --- | --- |
-| `menu-principal` | `<nav>` del menú de navegación |
-| `lista-productos` | `<ul>` que agrupa los productos |
-| `producto` | Cada `<li>` de producto |
-| `enlace-catalogo` | Enlace a `productos.html` y enlace de regreso a `index.html` |
-| `redes-sociales` | `<ul>` de redes sociales del footer |
+| `meta viewport` | `<head>` de `index.html` y `productos.html` (Semana 3) |
+| `<link rel="stylesheet">` | `<head>` de ambas páginas, apunta a `Alonso_PFY2201_CSS_Semana2.css` |
+| `class="menu-principal"` | `<nav>` del menú |
+| `class="lista-productos"` | `<ul>` que agrupa los productos |
+| `class="producto"` | Cada `<li>` de producto |
+| `class="enlace-catalogo"` | Enlace al catálogo y enlace de regreso a inicio |
+| `class="redes-sociales"` | `<ul>` de redes sociales del footer |
 
-Los identificadores `#inicio`, `#productos` y `#contacto` ya existían en el HTML original y se reutilizaron directamente como selectores.
+Los identificadores `#inicio`, `#productos` y `#contacto` ya existían en el HTML original y se reutilizaron como selectores.
 
 ## Catálogo de productos
 
@@ -170,6 +190,6 @@ Abrir el archivo `index.html` en cualquier navegador web moderno y navegar hacia
 
 Curso **Desarrollo Frontend I (PFY2201)**:
 
-- **Semana 1:** estructura y semántica HTML de ambas páginas.
-- **Semana 2:** hoja de estilos `Alonso_PFY2201_CSS_Semana2.css` con variables, modelo de cajas y selectores avanzados.
-- **Semana 3:** layout responsivo con Flexbox en nav y footer, CSS Grid dinámico (`auto-fit` / `minmax`) en el catálogo y media queries a 768px y 480px.
+- **Semana 1:** estructura y semántica HTML de ambas páginas. Informe: `entregables/Alonso_Basualdo_Semana1_PFY2201.docx`.
+- **Semana 2:** hoja `Alonso_PFY2201_CSS_Semana2.css` con variables, modelo de cajas y selectores avanzados (`nth-child`, `:hover`). Informe: `entregables/Alonso_Basualdo_Semana2_PFY2201.docx`.
+- **Semana 3:** layout responsivo con Flexbox en nav y footer, CSS Grid dinámico (`auto-fit` / `minmax`) en el catálogo, `meta viewport` y media queries a 768px y 480px. Informe: `entregables/Alonso_Basualdo_Semana3_PFY2201.docx`.
