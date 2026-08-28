@@ -11,7 +11,7 @@ Sobre esa estructura se aplica una hoja de estilos externa con un tema oscuro de
 - **HTML5** con etiquetas semánticas (`<header>`, `<nav>`, `<section>`, `<footer>`) y `meta viewport` para el render correcto en dispositivos móviles.
 - **CSS3** en una hoja externa, con variables personalizadas en `:root` y modelo de cajas (`box-sizing: border-box`).
 - **Flexbox** exclusivo en `.menu-principal ul` y `.redes-sociales` (footer) para alinear enlaces en fila.
-- **CSS Grid** en `.lista-productos` para la cuadrícula de tarjetas (3, 2 o 1 columna según el ancho).
+- **CSS Grid** en `.lista-productos` con `repeat(auto-fit, minmax(280px, 1fr))` para que las tarjetas llenen el ancho disponible sin dejar columnas vacías.
 - **Media queries** en `max-width: 768px` (tableta) y `max-width: 480px` (móvil); el escritorio usa los estilos base.
 - Navegación mediante enlaces entre páginas y anclajes internos (`id`) hacia las secciones de inicio, productos y contacto.
 - Atributos `alt` en todas las imágenes para cumplir con los estándares de accesibilidad web.
@@ -102,11 +102,13 @@ Se suman `--fuente-base` (pila sans-serif encabezada por Segoe UI), `--espacio` 
 
 ### Comportamiento responsive
 
+La grilla de productos no fija un número de columnas: `repeat(auto-fit, minmax(280px, 1fr))` crea tantas pistas como quepan (mínimo 280px) y colapsa las vacías, de modo que las dos tarjetas de `index.html` ocupan todo el ancho.
+
 | Ancho | Dispositivo | Layout |
 | --- | --- | --- |
-| Mayor a 768px | Escritorio (estilos base) | Grid de 3 columnas; menú y RRSS en fila (Flexbox) |
-| `max-width: 768px` | Tableta | Grid de 2 columnas; paddings intermedios; `h1` a 2.1rem |
-| `max-width: 480px` | Móvil | Grid de 1 columna; menú en columna (`flex-direction: column`); `h1` a 1.6rem |
+| Mayor a 768px | Escritorio (estilos base) | Grid dinámico (`auto-fit` / `minmax`); menú y RRSS en fila (Flexbox) |
+| `max-width: 768px` | Tableta | El Grid se adapta solo; paddings intermedios; `h1` a 2.1rem |
+| `max-width: 480px` | Móvil | Una columna cuando el contenedor baja de 280px; menú en columna (`flex-direction: column`); `h1` a 1.6rem |
 
 ```mermaid
 flowchart TD
@@ -118,15 +120,14 @@ flowchart TD
     Ids --> Productos["#productos: contenedor del catalogo"]
     Ids --> Contacto["#contacto: pie de pagina"]
     Clases --> Menu[".menu-principal ul: Flexbox horizontal"]
-    Clases --> Lista[".lista-productos: CSS Grid"]
+    Clases --> Lista[".lista-productos: Grid auto-fit minmax"]
     Clases --> Redes[".redes-sociales: Flexbox horizontal"]
     Lista --> Tarjeta[".producto: tarjeta con borde y sombra"]
     Tarjeta --> Impar["nth-child(odd): borde cian"]
     Tarjeta --> Par["nth-child(even): borde violeta"]
     Tarjeta --> Triple["nth-child(3n): degradado de realce"]
-    Lista --> Desk["Escritorio: 3 columnas"]
-    Lista --> Tablet["768px: 2 columnas"]
-    Lista --> Movil["480px: 1 columna"]
+    Lista --> Dinamico["Pistas segun el ancho: minimo 280px"]
+    Lista --> Expandir["auto-fit: colapsa columnas vacias"]
     Menu --> MenuMovil["480px: flex-direction column"]
 ```
 
@@ -171,4 +172,4 @@ Curso **Desarrollo Frontend I (PFY2201)**:
 
 - **Semana 1:** estructura y semántica HTML de ambas páginas.
 - **Semana 2:** hoja de estilos `Alonso_PFY2201_CSS_Semana2.css` con variables, modelo de cajas y selectores avanzados.
-- **Semana 3:** layout responsivo con Flexbox en nav y footer, CSS Grid en el catálogo y media queries a 768px y 480px.
+- **Semana 3:** layout responsivo con Flexbox en nav y footer, CSS Grid dinámico (`auto-fit` / `minmax`) en el catálogo y media queries a 768px y 480px.
