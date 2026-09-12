@@ -124,12 +124,24 @@ function aplicarInteractividadTarjeta(tarjeta) {
 
     const botonVerMas = tarjeta.querySelector(".btn-primary");
     if (botonVerMas) {
-        botonVerMas.addEventListener("click", function (e) {
-            if (botonVerMas.getAttribute("href") && botonVerMas.getAttribute("href").includes("#contacto")) {
+        const href = botonVerMas.getAttribute("href") || "";
+        if (href.includes("#contacto")) {
+            botonVerMas.setAttribute("href", "javascript:void(0)");
+            botonVerMas.addEventListener("click", function (e) {
                 e.preventDefault();
-                alert("Detalles del juego próximamente");
-            }
-        });
+
+                const aviso = document.createElement("div");
+                aviso.textContent = "Pronto se revelarán los detalles de este juego";
+                aviso.className = "position-fixed bottom-0 end-0 m-4 p-3 bg-info text-dark fw-bold rounded shadow";
+                aviso.style.zIndex = "1080";
+
+                document.body.appendChild(aviso);
+
+                setTimeout(function () {
+                    aviso.remove();
+                }, 3000);
+            });
+        }
     }
 }
 
