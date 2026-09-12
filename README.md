@@ -30,6 +30,7 @@ EliteGamingStore/
     ├── Alonso_Basualdo_Semana2_PFY2201.docx
     ├── Alonso_Basualdo_Semana3_PFY2201.docx
     └── Alonso_Basualdo_Semana4_PFY2201.docx
+    └── Alonso_Basualdo_Semana5_PFY2201.docx
 ```
 
 ## Páginas
