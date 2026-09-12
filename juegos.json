@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "titulo": "Elden Ring",
+    "descripcion": "Explora las Tierras Intermedias en un mundo abierto de acción y misterio.",
+    "imagen": "images/juego6.jpg"
+  },
+  {
+    "id": 2,
+    "titulo": "Red Dead Redemption 2",
+    "descripcion": "Vive el ocaso del lejano oeste como Arthur Morgan en una historia cinematográfica.",
+    "imagen": "images/juego7.jpg"
+  },
+  {
+    "id": 3,
+    "titulo": "Marvel's Spider-Man 2",
+    "descripcion": "Balancea por Nueva York con Peter y Miles frente a una nueva amenaza.",
+    "imagen": "images/juego8.jpg"
+  },
+  {
+    "id": 4,
+    "titulo": "Baldur's Gate 3",
+    "descripcion": "Forja tu destino en un RPG táctico basado en Dungeons & Dragons.",
+    "imagen": "images/juego9.jpg"
+  },
+  {
+    "id": 5,
+    "titulo": "Super Mario Odyssey",
+    "descripcion": "Acompaña a Mario y Cappy en un viaje por reinos coloridos para rescatar a Peach.",
+    "imagen": "images/juego10.jpg"
+  }
+]
