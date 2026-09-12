@@ -121,6 +121,16 @@ function aplicarInteractividadTarjeta(tarjeta) {
             alert("¡Excelente elección!");
         });
     }
+
+    const botonVerMas = tarjeta.querySelector(".btn-primary");
+    if (botonVerMas) {
+        botonVerMas.addEventListener("click", function (e) {
+            if (botonVerMas.getAttribute("href") && botonVerMas.getAttribute("href").includes("#contacto")) {
+                e.preventDefault();
+                alert("Detalles del juego próximamente");
+            }
+        });
+    }
 }
 
 /**
@@ -136,18 +146,18 @@ function interactividadTarjetas() {
 }
 
 /**
- * Carga juegos.json con Fetch, convierte la respuesta a JSON y añade
- * las tarjetas al final de la grilla #productos .row.g-4.
+ * Carga juegos.json con Fetch solo en el catálogo (productos.html).
+ * Si existe el carrusel de la portada, no descarga ni inyecta el JSON.
  */
 function cargarJuegosExternos() {
+    if (document.getElementById("carruselDestacados")) {
+        return;
+    }
+
     const grilla = document.querySelector("#productos .row.g-4");
     if (!grilla) {
         return;
     }
-
-    const enlaceVerMas = document.getElementById("carruselDestacados")
-        ? "productos.html"
-        : "#contacto";
 
     fetch("juegos.json")
         .then(function (respuesta) {
@@ -166,7 +176,7 @@ function cargarJuegosExternos() {
                     '<div class="card-body d-flex flex-column">' +
                     '<h3 class="card-title h5">' + juego.titulo + "</h3>" +
                     '<p class="card-text">' + juego.descripcion + "</p>" +
-                    '<a href="' + enlaceVerMas + '" class="btn btn-primary mt-auto">Ver más</a>' +
+                    '<a href="#contacto" class="btn btn-primary mt-auto">Ver más</a>' +
                     "</div></article>";
                 grilla.appendChild(columna);
 
