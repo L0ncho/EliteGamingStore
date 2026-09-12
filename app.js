@@ -4,7 +4,7 @@
  */
 
 /**
- * Crea un contenedor de campo Bootstrap (label + input/textarea).
+ * 
  * @param {string} etiqueta 
  * @param {string} tipo 
  * @param {string} id 
@@ -41,7 +41,7 @@ function crearCampo(etiqueta, tipo, id, nombre) {
 
 /**
  * Intercepta el submit: evita recargar, avisa el éxito y limpia los campos.
- * @param {SubmitEvent} evento Evento nativo del formulario
+ * @param {SubmitEvent} evento 
  */
 function manejarEnvio(evento) {
     evento.preventDefault();
@@ -118,7 +118,16 @@ function aplicarInteractividadTarjeta(tarjeta) {
     const imagen = tarjeta.querySelector(".card-img-top");
     if (imagen) {
         imagen.addEventListener("click", function () {
-            alert("¡Excelente elección!");
+            const aviso = document.createElement("div");
+            aviso.textContent = "¡Excelente elección!";
+            aviso.className = "position-fixed top-50 start-50 translate-middle p-4 bg-success text-white fw-bold fs-5 rounded-3 shadow-lg";
+            aviso.style.zIndex = "9999";
+
+            document.body.appendChild(aviso);
+
+            setTimeout(function () {
+                aviso.remove();
+            }, 2000);
         });
     }
 
