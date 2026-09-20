@@ -11,7 +11,7 @@
 <body>
     <!-- Inicio del Navbar -->
     <header id="inicio">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
             <div class="container">
                 <a class="navbar-brand" href="index.html">EliteGamingStore</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPrincipal" aria-controls="navbarPrincipal" aria-expanded="false" aria-label="Abrir menú de navegación">
@@ -33,7 +33,6 @@
                         <input type="search" id="input-busqueda" class="form-control me-2 bg-dark text-light border-info" placeholder="Buscar juego...">
                         <button class="btn btn-outline-info" type="submit">Buscar</button>
                     </form>
-                    <button class="btn btn-info ms-2 position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#carritoOffcanvas">Carrito <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="badge-carrito">0</span></button>
                 </div>
             </div>
         </nav>
@@ -144,5 +143,6 @@
         </div>
     </footer>
     <script src="assets/js/app.js"></script>
+    <button class="btn btn-info position-fixed bottom-0 end-0 m-4 shadow-lg position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#carritoOffcanvas" style="z-index: 1030;">Carrito <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="badge-carrito">0</span></button>
 </body>
 </html>

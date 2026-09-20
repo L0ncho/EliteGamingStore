@@ -4,7 +4,7 @@
  */
 
 /** Productos agregados al carrito: { titulo, cantidad, precio }. */
-let carrito = [];
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 /**
  * Pinta la lista del offcanvas, el badge del navbar y el total.
@@ -23,7 +23,7 @@ function actualizarCarritoDOM() {
             vacio.textContent = "El carrito está vacío.";
             lista.appendChild(vacio);
         } else {
-            carrito.forEach(function (item) {
+            carrito.forEach(function (item, indice) {
                 const fila = document.createElement("div");
                 fila.className = "d-flex justify-content-between align-items-start mb-3";
 
@@ -42,8 +42,23 @@ function actualizarCarritoDOM() {
                 const precio = document.createElement("span");
                 precio.textContent = "$" + (item.precio * item.cantidad).toLocaleString("es-CL");
 
+                const botonQuitar = document.createElement("button");
+                botonQuitar.type = "button";
+                botonQuitar.className = "btn btn-sm btn-danger ms-2";
+                botonQuitar.textContent = "X";
+                botonQuitar.addEventListener("click", function () {
+                    if (item.cantidad > 1) {
+                        item.cantidad--;
+                    } else {
+                        carrito.splice(indice, 1);
+                    }
+                    localStorage.setItem("carrito", JSON.stringify(carrito));
+                    actualizarCarritoDOM();
+                });
+
                 fila.appendChild(info);
                 fila.appendChild(precio);
+                fila.appendChild(botonQuitar);
                 lista.appendChild(fila);
             });
         }
@@ -64,6 +79,7 @@ function actualizarCarritoDOM() {
     if (totalEl) {
         totalEl.textContent = total === 0 ? "Total: $0" : "Total: $" + total.toLocaleString("es-CL");
     }
+    localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
 /**
@@ -82,6 +98,37 @@ function agregarAlCarrito(titulo) {
     }
 
     actualizarCarritoDOM();
+}
+
+/**
+ * Inyecta una sola vez el botón "Vaciar carrito" debajo de "Proceder al pago".
+ */
+function inyectarBotonVaciarCarrito() {
+    if (document.getElementById("btn-vaciar-carrito")) {
+        return;
+    }
+
+    const panel = document.getElementById("carritoOffcanvas");
+    if (!panel) {
+        return;
+    }
+
+    const botonPago = panel.querySelector(".btn-success");
+    if (!botonPago) {
+        return;
+    }
+
+    const botonVaciar = document.createElement("button");
+    botonVaciar.type = "button";
+    botonVaciar.id = "btn-vaciar-carrito";
+    botonVaciar.className = "btn btn-outline-danger w-100 mt-2";
+    botonVaciar.textContent = "Vaciar carrito";
+    botonVaciar.addEventListener("click", function () {
+        carrito = [];
+        actualizarCarritoDOM();
+    });
+
+    botonPago.insertAdjacentElement("afterend", botonVaciar);
 }
 
 /**
@@ -343,5 +390,6 @@ document.addEventListener("DOMContentLoaded", function () {
     interactividadTarjetas();
     cargarJuegosExternos();
     actualizarCarritoDOM();
+    inyectarBotonVaciarCarrito();
     iniciarBusqueda();
 });
