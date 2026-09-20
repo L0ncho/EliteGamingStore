@@ -243,22 +243,6 @@ function aplicarInteractividadTarjeta(tarjeta) {
         tarjeta.style.boxShadow = "";
     });
 
-    const imagen = tarjeta.querySelector(".card-img-top");
-    if (imagen) {
-        imagen.addEventListener("click", function () {
-            const aviso = document.createElement("div");
-            aviso.textContent = "¡Excelente elección!";
-            aviso.className = "position-fixed top-50 start-50 translate-middle p-4 bg-success text-white fw-bold fs-5 rounded-3 shadow-lg";
-            aviso.style.zIndex = "9999";
-
-            document.body.appendChild(aviso);
-
-            setTimeout(function () {
-                aviso.remove();
-            }, 2000);
-        });
-    }
-
     const botonVerMas = tarjeta.querySelector(".btn-primary");
     if (botonVerMas) {
         const href = botonVerMas.getAttribute("href") || "";
@@ -287,6 +271,17 @@ function aplicarInteractividadTarjeta(tarjeta) {
             const tituloEl = tarjeta.querySelector(".card-title");
             const titulo = tituloEl ? tituloEl.textContent.trim() : "";
             agregarAlCarrito(titulo);
+
+            const aviso = document.createElement("div");
+            aviso.textContent = "¡Excelente elección!";
+            aviso.className = "position-fixed top-50 start-50 translate-middle p-4 bg-success text-white fw-bold fs-5 rounded-3 shadow-lg";
+            aviso.style.zIndex = "9999";
+
+            document.body.appendChild(aviso);
+
+            setTimeout(function () {
+                aviso.remove();
+            }, 2000);
         });
     }
 }
