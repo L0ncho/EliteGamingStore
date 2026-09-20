@@ -3,6 +3,87 @@
  * Construye el formulario en el DOM y gestiona su envío.
  */
 
+/** Productos agregados al carrito: { titulo, cantidad, precio }. */
+let carrito = [];
+
+/**
+ * Pinta la lista del offcanvas, el badge del navbar y el total.
+ */
+function actualizarCarritoDOM() {
+    const lista = document.getElementById("lista-carrito");
+    const badge = document.getElementById("badge-carrito");
+    const totalEl = document.getElementById("total-carrito");
+
+    if (lista) {
+        lista.innerHTML = "";
+
+        if (carrito.length === 0) {
+            const vacio = document.createElement("p");
+            vacio.className = "text-center text-muted mt-4";
+            vacio.textContent = "El carrito está vacío.";
+            lista.appendChild(vacio);
+        } else {
+            carrito.forEach(function (item) {
+                const fila = document.createElement("div");
+                fila.className = "d-flex justify-content-between align-items-start mb-3";
+
+                const info = document.createElement("div");
+                const titulo = document.createElement("p");
+                titulo.className = "mb-0 fw-semibold";
+                titulo.textContent = item.titulo;
+
+                const cantidad = document.createElement("small");
+                cantidad.className = "text-muted";
+                cantidad.textContent = "Cantidad: " + item.cantidad;
+
+                info.appendChild(titulo);
+                info.appendChild(cantidad);
+
+                const precio = document.createElement("span");
+                precio.textContent = "$" + (item.precio * item.cantidad).toLocaleString("es-CL");
+
+                fila.appendChild(info);
+                fila.appendChild(precio);
+                lista.appendChild(fila);
+            });
+        }
+    }
+
+    const unidades = carrito.reduce(function (suma, item) {
+        return suma + item.cantidad;
+    }, 0);
+
+    if (badge) {
+        badge.textContent = String(unidades);
+    }
+
+    const total = carrito.reduce(function (suma, item) {
+        return suma + item.precio * item.cantidad;
+    }, 0);
+
+    if (totalEl) {
+        totalEl.textContent = total === 0 ? "Total: $0" : "Total: $" + total.toLocaleString("es-CL");
+    }
+}
+
+/**
+ * Suma un juego al arreglo carrito (o incrementa su cantidad) y refresca el DOM.
+ * @param {string} titulo Nombre del juego tomado de .card-title
+ */
+function agregarAlCarrito(titulo) {
+    const existente = carrito.find(function (item) {
+        return item.titulo === titulo;
+    });
+
+    if (existente) {
+        existente.cantidad += 1;
+    } else {
+        carrito.push({ titulo: titulo, cantidad: 1, precio: 20000 });
+    }
+
+    actualizarCarritoDOM();
+}
+
 /**
  * 
  * @param {string} etiqueta 
@@ -152,6 +233,15 @@ function aplicarInteractividadTarjeta(tarjeta) {
             });
         }
     }
+
+    const botonAgregar = tarjeta.querySelector(".btn-agregar");
+    if (botonAgregar) {
+        botonAgregar.addEventListener("click", function () {
+            const tituloEl = tarjeta.querySelector(".card-title");
+            const titulo = tituloEl ? tituloEl.textContent.trim() : "";
+            agregarAlCarrito(titulo);
+        });
+    }
 }
 
 /**
@@ -163,6 +253,36 @@ function interactividadTarjetas() {
 
     tarjetas.forEach(function (tarjeta) {
         aplicarInteractividadTarjeta(tarjeta);
+    });
+}
+
+/**
+ * Filtra las columnas de #productos según el título al enviar #form-busqueda.
+ */
+function iniciarBusqueda() {
+    const formulario = document.getElementById("form-busqueda");
+    const input = document.getElementById("input-busqueda");
+
+    if (!formulario || !input) {
+        return;
+    }
+
+    formulario.addEventListener("submit", function (evento) {
+        evento.preventDefault();
+
+        const termino = input.value.toLowerCase().trim();
+        const columnas = document.querySelectorAll("#productos .row.g-4 .col-12");
+
+        columnas.forEach(function (columna) {
+            const tituloEl = columna.querySelector(".card-title");
+            const titulo = tituloEl ? tituloEl.textContent.toLowerCase() : "";
+
+            if (titulo.includes(termino)) {
+                columna.style.display = "";
+            } else {
+                columna.style.display = "none";
+            }
+        });
     });
 }
 
@@ -197,7 +317,8 @@ function cargarJuegosExternos() {
                     '<div class="card-body d-flex flex-column">' +
                     '<h3 class="card-title h5">' + juego.titulo + "</h3>" +
                     '<p class="card-text">' + juego.descripcion + "</p>" +
-                    '<a href="#contacto" class="btn btn-primary mt-auto">Ver más</a>' +
+                    '<p class="card-text fw-bold text-info fs-5 mb-3">$20.000</p>' +
+                    '<button class="btn btn-success mt-auto btn-agregar">Agregar al carrito</button>' +
                     "</div></article>";
                 grilla.appendChild(columna);
 
@@ -209,6 +330,11 @@ function cargarJuegosExternos() {
         })
         .catch(function (error) {
             console.error("Error al cargar juegos externos:", error);
+
+            const alerta = document.createElement("div");
+            alerta.className = "alert alert-danger text-center mt-4 col-12";
+            alerta.textContent = "Lo sentimos, no pudimos cargar el catálogo adicional en este momento. Por favor, intenta más tarde.";
+            grilla.appendChild(alerta);
         });
 }
 
@@ -216,4 +342,6 @@ document.addEventListener("DOMContentLoaded", function () {
     inyectarFormulario();
     interactividadTarjetas();
     cargarJuegosExternos();
+    actualizarCarritoDOM();
+    iniciarBusqueda();
 });
