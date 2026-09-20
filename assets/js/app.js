@@ -393,7 +393,7 @@ function cargarJuegosExternos() {
             });
 
             const input = document.getElementById("input-busqueda");
-            if (input && input.value) {
+            if (input) {
                 filtrarTarjetas(input.value);
             }
         })
@@ -404,10 +404,24 @@ function cargarJuegosExternos() {
             alerta.className = "alert alert-danger text-center mt-4 col-12";
             alerta.textContent = "Lo sentimos, no pudimos cargar el catálogo adicional en este momento. Por favor, intenta más tarde.";
             grilla.appendChild(alerta);
+
+            const input = document.getElementById("input-busqueda");
+            if (input) {
+                filtrarTarjetas(input.value);
+            }
         });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+    const busquedaGuardada = localStorage.getItem("busqueda");
+    if (busquedaGuardada !== null) {
+        const input = document.getElementById("input-busqueda");
+        if (input) {
+            input.value = busquedaGuardada;
+        }
+        localStorage.removeItem("busqueda");
+    }
+
     inyectarFormulario();
     interactividadTarjetas();
     cargarJuegosExternos();
@@ -415,13 +429,10 @@ document.addEventListener("DOMContentLoaded", function () {
     inyectarBotonVaciarCarrito();
     iniciarBusqueda();
 
-    const busquedaGuardada = localStorage.getItem("busqueda");
-    if (busquedaGuardada !== null) {
+    if (document.getElementById("carruselDestacados")) {
         const input = document.getElementById("input-busqueda");
-        if (input) {
-            input.value = busquedaGuardada;
+        if (input && input.value) {
+            filtrarTarjetas(input.value);
         }
-        filtrarTarjetas(busquedaGuardada);
-        localStorage.removeItem("busqueda");
     }
 });
