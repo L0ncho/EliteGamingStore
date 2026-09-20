@@ -304,7 +304,28 @@ function interactividadTarjetas() {
 }
 
 /**
+ * Muestra u oculta las columnas de #productos según el texto del título.
+ * @param {string} texto Término escrito en el buscador
+ */
+function filtrarTarjetas(texto) {
+    const termino = String(texto || "").toLowerCase().trim();
+    const columnas = document.querySelectorAll("#productos .row.g-4 .col-12");
+
+    columnas.forEach(function (columna) {
+        const tituloEl = columna.querySelector(".card-title");
+        const titulo = tituloEl ? tituloEl.textContent.toLowerCase() : "";
+
+        if (titulo.includes(termino)) {
+            columna.style.display = "";
+        } else {
+            columna.style.display = "none";
+        }
+    });
+}
+
+/**
  * Filtra las columnas de #productos según el título al enviar #form-busqueda.
+ * Si no estamos en el catálogo, guarda el término y redirige a productos.html.
  */
 function iniciarBusqueda() {
     const formulario = document.getElementById("form-busqueda");
@@ -317,19 +338,15 @@ function iniciarBusqueda() {
     formulario.addEventListener("submit", function (evento) {
         evento.preventDefault();
 
-        const termino = input.value.toLowerCase().trim();
-        const columnas = document.querySelectorAll("#productos .row.g-4 .col-12");
+        const texto = input.value;
 
-        columnas.forEach(function (columna) {
-            const tituloEl = columna.querySelector(".card-title");
-            const titulo = tituloEl ? tituloEl.textContent.toLowerCase() : "";
+        if (!window.location.href.includes("productos.html")) {
+            localStorage.setItem("busqueda", texto);
+            window.location.href = "productos.html";
+            return;
+        }
 
-            if (titulo.includes(termino)) {
-                columna.style.display = "";
-            } else {
-                columna.style.display = "none";
-            }
-        });
+        filtrarTarjetas(texto);
     });
 }
 
@@ -374,6 +391,11 @@ function cargarJuegosExternos() {
                     aplicarInteractividadTarjeta(tarjetaNueva);
                 }
             });
+
+            const input = document.getElementById("input-busqueda");
+            if (input && input.value) {
+                filtrarTarjetas(input.value);
+            }
         })
         .catch(function (error) {
             console.error("Error al cargar juegos externos:", error);
@@ -392,4 +414,14 @@ document.addEventListener("DOMContentLoaded", function () {
     actualizarCarritoDOM();
     inyectarBotonVaciarCarrito();
     iniciarBusqueda();
+
+    const busquedaGuardada = localStorage.getItem("busqueda");
+    if (busquedaGuardada !== null) {
+        const input = document.getElementById("input-busqueda");
+        if (input) {
+            input.value = busquedaGuardada;
+        }
+        filtrarTarjetas(busquedaGuardada);
+        localStorage.removeItem("busqueda");
+    }
 });
