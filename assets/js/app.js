@@ -4,6 +4,7 @@
  */
 
 /** Productos agregados al carrito: { titulo, cantidad, precio }. */
+// Persistencia: recupera el carrito guardado o parte de un arreglo vacío.
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 /**
@@ -47,6 +48,7 @@ function actualizarCarritoDOM() {
                 botonQuitar.className = "btn btn-sm btn-danger ms-2";
                 botonQuitar.textContent = "X";
                 botonQuitar.addEventListener("click", function () {
+                    // Resta una unidad; si queda 1, elimina el ítem del arreglo.
                     if (item.cantidad > 1) {
                         item.cantidad--;
                     } else {
@@ -79,6 +81,7 @@ function actualizarCarritoDOM() {
     if (totalEl) {
         totalEl.textContent = total === 0 ? "Total: $0" : "Total: $" + total.toLocaleString("es-CL");
     }
+    // Persistencia: guarda el estado actual del carrito.
     localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
@@ -124,6 +127,7 @@ function inyectarBotonVaciarCarrito() {
     botonVaciar.className = "btn btn-outline-danger w-100 mt-2";
     botonVaciar.textContent = "Vaciar carrito";
     botonVaciar.addEventListener("click", function () {
+        // Vaciar carrito
         carrito = [];
         actualizarCarritoDOM();
     });
@@ -272,6 +276,7 @@ function aplicarInteractividadTarjeta(tarjeta) {
             const titulo = tituloEl ? tituloEl.textContent.trim() : "";
             agregarAlCarrito(titulo);
 
+            // Aviso visual al agregar un juego
             const aviso = document.createElement("div");
             aviso.textContent = "¡Excelente elección!";
             aviso.className = "position-fixed top-50 start-50 translate-middle p-4 bg-success text-white fw-bold fs-5 rounded-3 shadow-lg";
@@ -335,6 +340,7 @@ function iniciarBusqueda() {
 
         const texto = input.value;
 
+        // Si la búsqueda nace en Inicio, se guarda y se abre el catálogo.
         if (!window.location.href.includes("productos.html")) {
             localStorage.setItem("busqueda", texto);
             window.location.href = "productos.html";
@@ -359,6 +365,7 @@ function cargarJuegosExternos() {
         return;
     }
 
+    // Fetch API: carga el catálogo adicional
     fetch("juegos.json")
         .then(function (respuesta) {
             if (!respuesta.ok) {
@@ -393,6 +400,7 @@ function cargarJuegosExternos() {
             }
         })
         .catch(function (error) {
+            // Manejo de errores: alerta visual si el JSON no carga
             console.error("Error al cargar juegos externos:", error);
 
             const alerta = document.createElement("div");
@@ -408,6 +416,7 @@ function cargarJuegosExternos() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+    // Restaura la búsqueda hecha desde Inicio (antes del Fetch).
     const busquedaGuardada = localStorage.getItem("busqueda");
     if (busquedaGuardada !== null) {
         const input = document.getElementById("input-busqueda");
