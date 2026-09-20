@@ -1,6 +1,6 @@
 # Elite Gaming Store
 
-Sitio de dos páginas para la tienda de videojuegos **Elite Gaming Store**. La portada muestra un carrusel y dos juegos destacados; el catálogo lista cinco títulos estáticos y suma cinco más desde `juegos.json`. Cada tarjeta muestra imagen, nombre y precio (**$20.000**). Ambas páginas comparten navbar (buscador y carrito), footer de contacto y tema oscuro.
+Sitio de dos páginas para la tienda de videojuegos **Elite Gaming Store**. La portada muestra un carrusel y dos juegos destacados; el catálogo lista cinco títulos estáticos y suma cinco más desde `juegos.json`. Cada tarjeta muestra imagen, nombre y precio (**$20.000**). Ambas páginas comparten navbar con buscador, botón flotante de carrito (offcanvas), footer de contacto y tema oscuro.
 
 El layout anterior (HTML propio + CSS de Semanas 2–3) se sustituyó por **Bootstrap 5**. Los estilos propios viven en `assets/css/styles.css`. La hoja antigua no se carga: está archivada en `css/`. La lógica de DOM, Fetch, carrito y búsqueda vive en `assets/js/app.js`.
 
@@ -9,7 +9,7 @@ El layout anterior (HTML propio + CSS de Semanas 2–3) se sustituyó por **Boot
 - HTML5 semántico (`header`, `main`, `nav`, `section`, `footer`) y `meta viewport`
 - Bootstrap 5.3.3 por CDN (CSS y JS), offcanvas del carrito
 - Tema oscuro nativo: `data-bs-theme="dark"`
-- Vanilla JS en `assets/js/app.js` (formulario, Fetch, carrito, búsqueda, alerta si el JSON falla)
+- Vanilla JS en `assets/js/app.js` (formulario, Fetch, carrito con `localStorage`, búsqueda, alerta si el JSON falla)
 - Navegación entre páginas y ancla `#contacto` al pie
 
 ## Estructura
@@ -42,9 +42,9 @@ EliteGamingStore/
 
 | Archivo                              | Contenido                                                                                          |
 | ------------------------------------ | -------------------------------------------------------------------------------------------------- |
-| `index.html`                         | Portada: navbar (buscador y carrito), carrusel y 2 productos destacados (precio $20.000).           |
-| `productos.html`                     | Catálogo: 5 productos estáticos + 5 inyectados desde `juegos.json` (precio $20.000 en todas).      |
-| `assets/js/app.js`                   | Formulario en `#contacto`, Fetch, carrito (offcanvas), filtro `#form-busqueda` y alerta si falla el JSON. |
+| `index.html`                         | Portada: navbar con buscador, carrusel, 2 destacados y carrito flotante.                            |
+| `productos.html`                     | Catálogo: 5 estáticos + 5 desde `juegos.json`; mismo buscador y carrito flotante.                  |
+| `assets/js/app.js`                   | Formulario, Fetch (alerta si falla), carrito (`localStorage`, quitar, vaciar) y búsqueda (redirige al catálogo). |
 | `assets/css/styles.css`              | Estilos propios (carrusel, cards, navbar).                                                         |
 | `juegos.json`                        | Array de 5 juegos (`id`, `titulo`, `descripcion`, `imagen`).                                       |
 | `css/Alonso_PFY2201_CSS_Semana2.css` | CSS histórico de Semanas 2–3. No se enlaza.                                                        |
@@ -78,7 +78,7 @@ Datos ficticios, iguales en ambas páginas:
 
 ## Uso
 
-Servir el proyecto con un servidor local (Live Server u otro). `fetch("juegos.json")` no funciona si se abre el HTML con `file://`. Bootstrap se carga desde el CDN (hace falta internet). Ambas páginas enlazan `assets/css/styles.css` y, al final del `body`, `assets/js/app.js`.
+Servir el proyecto con un servidor local (Live Server u otro). `fetch("juegos.json")` no funciona si se abre el HTML con `file://`. Bootstrap se carga desde el CDN (hace falta internet). Ambas páginas enlazan `assets/css/styles.css` y, al final del `body`, `assets/js/app.js`. El carrito se guarda en `localStorage`. Buscar desde Inicio abre `productos.html` y filtra también los juegos del JSON.
 
 ## Curso
 
