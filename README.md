@@ -30,7 +30,7 @@ Abrir la URL que imprime Vite. Con la base del proyecto queda en `http://localho
 
 El sitio publicado vive en [https://l0ncho.github.io/EliteGamingStore/](https://l0ncho.github.io/EliteGamingStore/). `npm run deploy` compila y sube solo la carpeta `dist` a la rama `gh-pages`.
 
-###EVIDENCIA
+##EVIDENCIA
 
 ### 1. Vista Principal (Home)
 La página de inicio cuenta con una barra de navegación superior, buscador integrado y un carrusel dinámico para destacar títulos principales.
