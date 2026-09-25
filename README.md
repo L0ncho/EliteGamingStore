@@ -1,85 +1,38 @@
 # Elite Gaming Store
 
-Sitio de dos páginas para la tienda de videojuegos **Elite Gaming Store**. La portada muestra un carrusel y dos juegos destacados; el catálogo lista cinco títulos estáticos y suma cinco más desde `juegos.json`. Cada tarjeta muestra imagen, nombre y precio (**$20.000**). Ambas páginas comparten navbar con buscador, botón flotante de carrito (offcanvas), footer de contacto y tema oscuro.
+Catálogo de videojuegos en **React** con **Vite**. La portada muestra un carrusel de tres destacados y carga el catálogo desde `public/juegos.json`.
 
-El layout anterior (HTML propio + CSS de Semanas 2–3) se sustituyó por **Bootstrap 5**. Los estilos propios viven en `assets/css/styles.css`. La hoja antigua no se carga: está archivada en `css/`. La lógica de DOM, Fetch, carrito y búsqueda vive en `assets/js/app.js`.
+Cada juego tiene nombre, descripción, imagen, categoría, precio normal, porcentaje de descuento y precio de oferta. El precio de oferta es el precio normal con ese descuento ya aplicado. La tarjeta muestra el porcentaje en una medalla y el precio normal tachado junto al de oferta.
+
+## Qué hace la app
+
+- **Navbar:** buscador y menú de categorías (Todas, Juegos de Consola, Juegos de PC). El catálogo se filtra por texto y categoría a la vez. Si no hay coincidencias, aparece un aviso.
+- **Carrito:** botón flotante que abre un panel lateral. Agregar suma el juego; Eliminar lo quita. El total suma el precio de oferta. Vacío, el botón se ve a media opacidad y recupera el 100 % al pasar el mouse o cuando hay al menos un producto.
+- **Contacto:** formulario con correo y mensaje, debajo del catálogo. El pie muestra la dirección y las redes.
+- **Error de carga:** si `juegos.json` no se puede leer, una alerta roja queda fija sobre el catálogo.
 
 ## Tecnologías
 
-- HTML5 semántico (`header`, `main`, `nav`, `section`, `footer`) y `meta viewport`
-- Bootstrap 5.3.3 por CDN (CSS y JS), offcanvas del carrito
-- Tema oscuro nativo: `data-bs-theme="dark"`
-- Vanilla JS en `assets/js/app.js` (formulario, Fetch, carrito con `localStorage`, búsqueda, alerta si el JSON falla)
-- Navegación entre páginas y ancla `#contacto` al pie
+- React 19 y Vite
+- Bootstrap 5.3 y react-bootstrap
+- Tema oscuro: `data-bs-theme="dark"` en `index.html`
 
-## Estructura
+## Uso
 
-```
-EliteGamingStore/
-├── index.html
-├── productos.html
-├── juegos.json
-├── README.md
-├── assets/
-│   ├── css/
-│   │   └── styles.css
-│   ├── img/
-│   │   └── juego1.jpg … juego10.jpg
-│   └── js/
-│       └── app.js
-├── css/
-│   └── Alonso_PFY2201_CSS_Semana2.css
-└── entregables/
-    ├── Alonso_Basualdo_Semana1_PFY2201.docx
-    ├── Alonso_Basualdo_Semana2_PFY2201.docx
-    ├── Alonso_Basualdo_Semana3_PFY2201.docx
-    ├── Alonso_Basualdo_Semana4_PFY2201.docx
-    └── Alonso_Basualdo_Semana5_PFY2201.docx
+```bash
+npm install
+npm run dev
 ```
 
-## Páginas
-
-
-| Archivo                              | Contenido                                                                                          |
-| ------------------------------------ | -------------------------------------------------------------------------------------------------- |
-| `index.html`                         | Portada: navbar con buscador, carrusel, 2 destacados y carrito flotante.                            |
-| `productos.html`                     | Catálogo: 5 estáticos + 5 desde `juegos.json`; mismo buscador y carrito flotante.                  |
-| `assets/js/app.js`                   | Formulario, Fetch (alerta si falla), carrito (`localStorage`, quitar, vaciar) y búsqueda (redirige al catálogo). |
-| `assets/css/styles.css`              | Estilos propios (carrusel, cards, navbar).                                                         |
-| `juegos.json`                        | Array de 5 juegos (`id`, `titulo`, `descripcion`, `imagen`).                                       |
-| `css/Alonso_PFY2201_CSS_Semana2.css` | CSS histórico de Semanas 2–3. No se enlaza.                                                        |
-| `entregables/`                       | Informes Word del curso.                                                                           |
-
-
-## Catálogo
-
-
-| Juego                                   | Imagen                    | Origen                         |
-| --------------------------------------- | ------------------------- | ------------------------------ |
-| The Legend of Zelda: Breath of the Wild | `assets/img/juego1.jpg`   | HTML                           |
-| God of War Ragnarök                     | `assets/img/juego2.jpg`   | HTML                           |
-| Cyberpunk 2077                          | `assets/img/juego3.jpg`   | HTML (`productos.html`)        |
-| The Witcher 3: Wild Hunt                | `assets/img/juego4.jpg`   | HTML (`productos.html`)        |
-| The Last of Us Part II                  | `assets/img/juego5.jpg`   | HTML (`productos.html`)        |
-| Elden Ring                              | `assets/img/juego6.jpg`   | `juegos.json` (solo catálogo)  |
-| Red Dead Redemption 2                   | `assets/img/juego7.jpg`   | `juegos.json` (solo catálogo)  |
-| Marvel's Spider-Man 2                   | `assets/img/juego8.jpg`   | `juegos.json` (solo catálogo)  |
-| Baldur's Gate 3                         | `assets/img/juego9.jpg`   | `juegos.json` (solo catálogo)  |
-| Super Mario Odyssey                     | `assets/img/juego10.jpg`  | `juegos.json` (solo catálogo)  |
-
-Precio simulado en todas las tarjetas (HTML y Fetch): **$20.000**.
+Abrir la URL que imprime Vite (por defecto `http://localhost:5173`).
 
 ## Contacto
 
-Datos ficticios, iguales en ambas páginas:
+Datos ficticios:
 
 - Dirección: Av. Libertad 15554, Valparaíso, Chile
 - Redes: Facebook, Twitter e Instagram
 
-## Uso
-
-Servir el proyecto con un servidor local (Live Server u otro). `fetch("juegos.json")` no funciona si se abre el HTML con `file://`. Bootstrap se carga desde el CDN (hace falta internet). Ambas páginas enlazan `assets/css/styles.css` y, al final del `body`, `assets/js/app.js`. El carrito se guarda en `localStorage`. Buscar desde Inicio abre `productos.html` y filtra también los juegos del JSON.
-
 ## Curso
 
-**Desarrollo Frontend I (PFY2201).** Semanas 1–3: HTML y CSS propio. Semana 4: Bootstrap 5. JavaScript (Fetch, carrito y búsqueda) en `assets/js/app.js` / `juegos.json`. Informes en `entregables/`.
+**Desarrollo Frontend I (PFY2201).** La app es React + Vite: catálogo con Fetch, descuentos por juego, filtro, carrito y formulario de contacto.
