@@ -8,7 +8,7 @@ export default function ProductCard({ producto, agregarAlCarrito }) {
   return (
     <article className="card h-100">
       <img
-        src={producto.imagen}
+        src={import.meta.env.BASE_URL + producto.imagen.replace(/^\/?public\//, "").replace(/^\//, "")}
         className="card-img-top"
         alt={"Portada del juego " + producto.nombre}
       />
