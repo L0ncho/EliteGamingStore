@@ -33,7 +33,7 @@ export default function App() {
   }
 
   useEffect(() => {
-    fetch("/juegos.json")
+    fetch(import.meta.env.BASE_URL + "juegos.json")
       .then((respuesta) => {
         if (!respuesta.ok) {
           throw new Error("No se pudo cargar el catálogo de juegos.");

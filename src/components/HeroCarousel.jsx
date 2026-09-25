@@ -2,15 +2,15 @@ import { Carousel } from "react-bootstrap";
 
 const destacados = [
   {
-    imagen: "/assets/img/juego1.jpg",
+    imagen: import.meta.env.BASE_URL + "assets/img/juego1.jpg",
     alt: "Portada del juego The Legend of Zelda: Breath of the Wild",
   },
   {
-    imagen: "/assets/img/juego2.jpg",
+    imagen: import.meta.env.BASE_URL + "assets/img/juego2.jpg",
     alt: "Portada del juego God of War Ragnarök",
   },
   {
-    imagen: "/assets/img/juego4.jpg",
+    imagen: import.meta.env.BASE_URL + "assets/img/juego4.jpg",
     alt: "Portada del juego The Witcher 3: Wild Hunt",
   },
 ];
