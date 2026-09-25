@@ -7,7 +7,7 @@ Cada juego tiene nombre, descripción, imagen, categoría, precio normal, porcen
 ## Qué hace la app
 
 - **Navbar:** buscador y menú de categorías (Todas, Juegos de Consola, Juegos de PC). El catálogo se filtra por texto y categoría a la vez. Si no hay coincidencias, aparece un aviso.
-- **Carrito:** botón flotante que abre un panel lateral. Agregar suma el juego; Eliminar lo quita. El total suma el precio de oferta. Vacío, el botón se ve a media opacidad y recupera el 100 % al pasar el mouse o cuando hay al menos un producto.
+- **Carrito:** botón flotante que abre un panel lateral. Si el juego ya está, se suma 1 a su cantidad y el título muestra el volumen (por ejemplo, x3). Eliminar resta 1 y, al llegar a 0, quita el juego. El contador y el total multiplican el precio de oferta por la cantidad. Vacío, el botón se ve a media opacidad y recupera el 100 % al pasar el mouse o cuando hay al menos un producto.
 - **Contacto:** formulario con correo y mensaje, debajo del catálogo. El pie muestra la dirección y las redes.
 - **Error de carga:** si `juegos.json` no se puede leer, una alerta roja queda fija sobre el catálogo.
 
@@ -24,7 +24,11 @@ npm install
 npm run dev
 ```
 
-Abrir la URL que imprime Vite (por defecto `http://localhost:5173`).
+Abrir la URL que imprime Vite. Con la base del proyecto queda en `http://localhost:5173/EliteGamingStore/`.
+
+## Publicación
+
+El sitio publicado vive en [https://l0ncho.github.io/EliteGamingStore/](https://l0ncho.github.io/EliteGamingStore/). `npm run deploy` compila y sube solo la carpeta `dist` a la rama `gh-pages`.
 
 ## Contacto
 
@@ -35,4 +39,4 @@ Datos ficticios:
 
 ## Curso
 
-**Desarrollo Frontend I (PFY2201).** La app es React + Vite: catálogo con Fetch, descuentos por juego, filtro, carrito y formulario de contacto.
+**Desarrollo Frontend I (PFY2201).** La app es React + Vite: catálogo con Fetch, descuentos por juego, filtro, carrito con cantidades y formulario de contacto.
