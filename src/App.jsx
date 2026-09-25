@@ -23,13 +23,25 @@ export default function App() {
   }
 
   function agregarAlCarrito(producto) {
-    // Agrega el juego al carrito. El spread copia el arreglo y añade el producto al final, sin mutar el estado anterior.
-    setCarrito((actual) => [...actual, producto]);
+    // Si el id ya está, map copia el arreglo y suma 1 a cantidad. Si no, el spread agrega el producto con cantidad 1.
+    setCarrito((actual) => {
+      const existe = actual.some((item) => item.id === producto.id);
+      if (existe) {
+        return actual.map((item) =>
+          item.id === producto.id ? { ...item, cantidad: item.cantidad + 1 } : item
+        );
+      }
+      return [...actual, { ...producto, cantidad: 1 }];
+    });
   }
 
-  function eliminarDelCarrito(indice) {
-    // Quita un ítem del carrito. filter devuelve un arreglo nuevo y deja fuera solo ese índice, sin mutar carrito.
-    setCarrito((actual) => actual.filter((_, posicion) => posicion !== indice));
+  function eliminarDelCarrito(id) {
+    // Resta 1 a la cantidad de ese id. Si llega a 0, filter quita el ítem y deja un arreglo nuevo.
+    setCarrito((actual) =>
+      actual
+        .map((item) => (item.id === id ? { ...item, cantidad: item.cantidad - 1 } : item))
+        .filter((item) => item.cantidad > 0)
+    );
   }
 
   useEffect(() => {
@@ -142,7 +154,7 @@ export default function App() {
         style={{ zIndex: 1050 }}
         onClick={abrirCarrito}
       >
-        Carrito <Badge bg="danger">{carrito.length}</Badge>
+        Carrito <Badge bg="danger">{carrito.reduce((suma, item) => suma + item.cantidad, 0)}</Badge>
       </button>
     </>
   );
