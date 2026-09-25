@@ -53,7 +53,9 @@ El sistema incluye un panel lateral para gestionar la compra.
 
 ### 4. Diseño Responsivo
 Toda la interfaz fue construida para adaptarse a cualquier tamaño de pantalla, redistribuyendo el catálogo y transformando el menú principal en dispositivos móviles y tablets.
+
 <img width="749" height="802" alt="Captura de pantalla 2026-09-25 201752" src="https://github.com/user-attachments/assets/79d4ea34-81d9-4b15-928b-4804b2467f3d" />
+
 <img width="991" height="930" alt="Captura de pantalla 2026-09-25 201812" src="https://github.com/user-attachments/assets/e253c13e-eeed-4f6e-bf97-bc38777cda91" />
 
 
