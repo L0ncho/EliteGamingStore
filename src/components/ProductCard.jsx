@@ -1,14 +1,25 @@
+import { useState } from "react";
 import { Badge } from "react-bootstrap";
 
 function formatoPrecio(valor) {
   return "$" + Number(valor).toLocaleString("es-CL");
 }
 
-export default function ProductCard({ producto, agregarAlCarrito }) {
+export default function ProductCard({ producto, agregarAlCarrito, yaSeleccionado, cantidad }) {
+  const [detalleVisible, setDetalleVisible] = useState(false);
+  const rutaImagen =
+    import.meta.env.BASE_URL + producto.imagen.replace(/^\/?public\//, "").replace(/^\//, "");
+  const claseBoton = yaSeleccionado ? "btn btn-secondary mt-auto" : "btn btn-success mt-auto";
+  const textoBoton = yaSeleccionado ? "Artículo ya seleccionado" : "Agregar al carrito";
+
   return (
-    <article className="card h-100">
+    <article
+      className="card h-100"
+      onMouseEnter={() => setDetalleVisible(true)}
+      onMouseLeave={() => setDetalleVisible(false)}
+    >
       <img
-        src={import.meta.env.BASE_URL + producto.imagen.replace(/^\/?public\//, "").replace(/^\//, "")}
+        src={rutaImagen}
         className="card-img-top"
         alt={"Portada del juego " + producto.nombre}
       />
@@ -17,7 +28,7 @@ export default function ProductCard({ producto, agregarAlCarrito }) {
           <span>{producto.nombre}</span>
           <Badge bg="danger">-{producto.descuento}%</Badge>
         </h2>
-        <p className="card-text">{producto.descripcion}</p>
+        <p className="mb-2 fw-bold text-warning">★ {Number(producto.valoracion).toFixed(1)}</p>
         <p className="card-text mb-3">
           <span className="text-decoration-line-through text-secondary me-2">
             {formatoPrecio(producto.precioNormal)}
@@ -26,12 +37,21 @@ export default function ProductCard({ producto, agregarAlCarrito }) {
             {formatoPrecio(producto.precioOferta)}
           </span>
         </p>
+        {detalleVisible ? (
+          <>
+            <p className="mb-1 text-info">{producto.categoria}</p>
+            <p className="card-text mb-3">{producto.descripcion}</p>
+          </>
+        ) : null}
+        {yaSeleccionado ? (
+          <p className="mb-2 fw-bold text-info">x{cantidad}</p>
+        ) : null}
         <button
           type="button"
-          className="btn btn-success mt-auto"
+          className={claseBoton}
           onClick={() => agregarAlCarrito(producto)}
         >
-          Agregar al carrito
+          {textoBoton}
         </button>
       </div>
     </article>

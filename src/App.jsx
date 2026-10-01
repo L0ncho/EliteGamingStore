@@ -45,7 +45,7 @@ export default function App() {
   }
 
   useEffect(() => {
-    fetch(import.meta.env.BASE_URL + "juegos.json")
+    fetch(import.meta.env.BASE_URL + "juegos.json", { cache: "no-store" })
       .then((respuesta) => {
         if (!respuesta.ok) {
           throw new Error("No se pudo cargar el catálogo de juegos.");
@@ -103,11 +103,20 @@ export default function App() {
             ) : null}
             {productosFiltrados.length > 0 ? (
               <div className="row g-4">
-                {productosFiltrados.map((juego) => (
+                {productosFiltrados.map((juego) => {
+                  const enCarrito = carrito.find((item) => item.id === juego.id);
+                  return (
                   <div className="col-12 col-md-6 col-lg-4" key={juego.id}>
-                    <ProductCard producto={juego} agregarAlCarrito={agregarAlCarrito} />
+                    <ProductCard
+                      producto={juego}
+                      agregarAlCarrito={agregarAlCarrito}
+                      // yaSeleccionado es true si ese id está en el carrito. ProductCard lo usa para el texto y el estilo del botón. cantidad indica cuántas unidades de ese mismo juego hay.
+                      yaSeleccionado={Boolean(enCarrito)}
+                      cantidad={enCarrito ? enCarrito.cantidad : 0}
+                    />
                   </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
               <div className="alert alert-secondary text-center text-body-secondary" role="status">
