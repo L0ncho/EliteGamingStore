@@ -32,22 +32,36 @@ El sitio publicado vive en [https://l0ncho.github.io/EliteGamingStore/](https://
 
 ## EVIDENCIA
 
-### 1. Vista Principal (Home)
-La página de inicio cuenta con una barra de navegación superior, buscador integrado y un carrusel dinámico para destacar títulos principales.
-<img width="1869" height="535" alt="Captura de pantalla 2026-09-25 201327" src="https://github.com/user-attachments/assets/97e6b639-dfcc-48c7-b26b-878af5f1f362" />
+### 1. Estados del carrito y del  boton
 
-### 2. Catálogo de Juegos
-La grilla de productos carga los datos desde un archivo JSON. Calcula automáticamente el precio final aplicando el porcentaje de descuento y muestra cada tarjeta con su respectivo botón de compra.
-<img width="1291" height="925" alt="1" src="https://github.com/user-attachments/assets/ed0e64fa-d9ed-4969-9ca5-0e8cf027d975" />
+useState guarda el catálogo y el carrito. Agregar el mismo juego otra vez suma 1 a su cantidad. El botón de la tarjeta es el elemento interactivo: pasa de Agregar al carrito a Artículo ya seleccionado cuando ese juego ya está en el estado del carrito.
+
+<img width="1912" height="612" alt="Captura de pantalla 2026-10-01 042515" src="https://github.com/user-attachments/assets/e615abe8-1dd4-4b67-b59f-20720ee38ddf" />
 
 
-### 3. Carrito de Compras (Funcional)
-El sistema incluye un panel lateral para gestionar la compra. 
-* **Estado vacío:** Indica al usuario que debe seleccionar productos.
-<img width="736" height="944" alt="Captura de pantalla 2026-09-25 201501" src="https://github.com/user-attachments/assets/df2aae0d-84fe-4154-818f-01e4d4bd05f4" />
+### 2. Datos cargados con useEffect
+useEffect carga public/juegos.json al montar la aplicación y guarda el resultado en el estado del catálogo. Las tarjetas muestran nombre, descuento, valoración y precios que vienen de ese archivo, no de una lista fija en el componente.
 
-* **Con productos:** Suma el precio total matemático exacto, contabiliza los ítems en el botón flotante y permite la eliminación individual.
-<img width="520" height="943" alt="Captura de pantalla 2026-09-25 201520" src="https://github.com/user-attachments/assets/1bbf089c-8c9c-4b6a-8dda-9351e79f86cb" />
+<img width="1392" height="608" alt="Captura de pantalla 2026-10-01 042923" src="https://github.com/user-attachments/assets/6717da7f-c046-4852-897a-e0db6107cf20" />
+
+
+### 3. Tres condicionales
+A) Mensaje del carrito, estado del boton flotante
+Si el carrito está vacío, no se renderiza la lista. Se muestra el mensaje de carrito vacío y el botón flotante usa el estilo de menor opacidad.
+
+<img width="358" height="896" alt="Captura de pantalla 2026-10-01 043115" src="https://github.com/user-attachments/assets/3367df05-ed4e-4a33-ac48-7dae3808ed6b" />
+
+
+B) Estilo del botón
+El mismo botón cambia de texto y de clase según el estado. Verde si el juego no está en el carrito y gris si ya está seleccionado.
+
+<img width="1287" height="517" alt="Captura de pantalla 2026-10-01 043302" src="https://github.com/user-attachments/assets/e5219ac8-7316-4b80-b183-df6280306569" />
+
+
+C) Vista al pasar el mouse.
+La categoría y la descripción se renderizan únicamente cuando el mouse está sobre la tarjeta. Al salir, esa vista se oculta y quedan el título, la valoración, el precio y el botón.
+<img width="812" height="488" alt="Captura de pantalla 2026-10-01 043434" src="https://github.com/user-attachments/assets/19ca02a6-a653-4f4d-953d-220ae12f667a" />
+
 
 
 
