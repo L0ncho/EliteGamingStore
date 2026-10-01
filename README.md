@@ -1,5 +1,3 @@
-<img width="1592" height="612" alt="Captura de pantalla 2026-10-01 044052" src="https://github.com/user-attachments/assets/dfabdb2b-408e-4b0d-bd0a-23faf57d3c3c" />
-<img width="1592" height="612" alt="Captura de pantalla 2026-10-01 044052" src="https://github.com/user-attachments/assets/f1e31fd1-60bf-4036-918f-3c4f5d55f710" />
 # Elite Gaming Store
 
 Catálogo de videojuegos en **React** con **Vite**. La portada muestra un carrusel de tres destacados y carga el catálogo desde `public/juegos.json`.
