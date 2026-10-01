@@ -1,3 +1,5 @@
+<img width="1592" height="612" alt="Captura de pantalla 2026-10-01 044052" src="https://github.com/user-attachments/assets/dfabdb2b-408e-4b0d-bd0a-23faf57d3c3c" />
+<img width="1592" height="612" alt="Captura de pantalla 2026-10-01 044052" src="https://github.com/user-attachments/assets/f1e31fd1-60bf-4036-918f-3c4f5d55f710" />
 # Elite Gaming Store
 
 Catálogo de videojuegos en **React** con **Vite**. La portada muestra un carrusel de tres destacados y carga el catálogo desde `public/juegos.json`.
@@ -55,7 +57,8 @@ Si el carrito está vacío, no se renderiza la lista. Se muestra el mensaje de c
 B) Estilo del botón
 El mismo botón cambia de texto y de clase según el estado. Verde si el juego no está en el carrito y gris si ya está seleccionado.
 
-<img width="1287" height="517" alt="Captura de pantalla 2026-10-01 043302" src="https://github.com/user-attachments/assets/e5219ac8-7316-4b80-b183-df6280306569" />
+<img width="1592" height="612" alt="Captura de pantalla 2026-10-01 044052" src="https://github.com/user-attachments/assets/b176814b-860d-4bad-905c-e03d8cd59d9f" />
+
 
 
 C) Vista al pasar el mouse.
