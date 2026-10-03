@@ -44,7 +44,7 @@ export default function ContactForm() {
 
   return (
     <section className="py-4" aria-labelledby="titulo-contacto">
-      <div className="container">
+      <div id="contacto" className="container">
         <form
           id="formulario-contacto"
           className="mt-2"

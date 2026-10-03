@@ -128,7 +128,7 @@ export default function App() {
         <ContactForm />
       </main>
 
-      <footer id="contacto" className="bg-dark text-light py-4 mt-4">
+      <footer className="bg-dark text-light py-4 mt-4">
         <div className="container d-flex flex-wrap justify-content-between align-items-center gap-3">
           <div>
             <h2 className="h5">RRSS</h2>

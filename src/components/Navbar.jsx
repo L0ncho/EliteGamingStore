@@ -11,6 +11,11 @@ export default function NavbarTienda({
     actualizarCategoria(categoria);
   }
 
+  function volverAlInicio() {
+    actualizarCategoria("");
+    actualizarBusqueda("");
+  }
+
   return (
     <Navbar expand="lg" bg="dark" variant="dark" sticky="top" className="mb-4">
       <Container>
@@ -18,6 +23,9 @@ export default function NavbarTienda({
         <Navbar.Toggle aria-controls="navbar-principal" />
         <Navbar.Collapse id="navbar-principal">
           <Nav className="ms-auto">
+            <Nav.Link href="#inicio" onClick={volverAlInicio}>
+              Inicio
+            </Nav.Link>
             <NavDropdown title={categoriaActiva || "Categorías"} id="nav-categorias">
               <NavDropdown.Item
                 href="#todas"
